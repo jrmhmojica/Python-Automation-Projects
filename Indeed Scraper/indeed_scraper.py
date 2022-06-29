@@ -9,7 +9,7 @@ joblist = []
 
 #EXTRACT HTML
 def extract(page):
-    headers = {'USer-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0'}
+    headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0'}
     url = f"https://ph.indeed.com/jobs?q=data+analyst&start={page}"
     r = requests.get(url, headers)
     soup = BeautifulSoup(r.content, 'html.parser')
