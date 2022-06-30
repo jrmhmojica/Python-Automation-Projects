@@ -1,15 +1,15 @@
 #IMPORT MODULES
-from gettext import find
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import config as c
 
 #INITIALIZE EMPTY LIST
 joblist = []
 
 #EXTRACT HTML
 def extract(page):
-    headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0'}
+    headers = {'User-Agent' : c.ua}
     url = f"https://ph.indeed.com/jobs?q=data+analyst&start={page}"
     r = requests.get(url, headers)
     soup = BeautifulSoup(r.content, 'html.parser')
@@ -35,7 +35,7 @@ def transform(soup):
         }
         joblist.append(job)
 
-#LOOPING THROUGHT THE PAGES
+#LOOPING THROUGH THE PAGES
 for i in range(0,60,10):
     content = extract(i)
     transform(content)
@@ -44,5 +44,5 @@ for i in range(0,60,10):
 df = pd.DataFrame(joblist)
 
 #CREATING A CSV FILE
-path = "C:\\Users\\jayja\\OneDrive\\Documents\\Python\\Projects\\Automation Projects\\Indeed Scraper\\"
-df.to_csv(path+"indeed_jobs.csv")
+path = c.file_path + "Indeed Scraper/"
+df.to_csv(path + "indeed_jobs.csv")
